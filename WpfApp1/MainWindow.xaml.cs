@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.ViewModel;
 
 namespace WpfApp1
 {
@@ -23,6 +24,24 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+
+            // DataContextを設定、xamlで設定しても良い
+            DataContext = new MainWindowViewModel();
+
+            ((MainWindowViewModel)DataContext).Input = "init";
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // 直接画面を更新するのではなく、ViewModelを更新する
+            // ViewModel -> View へ変更通知を飛ばす
+            // View -> ViewModelはxamlでBinding （UpdateSourceTriggerでタイミングを設定。フォーカス、プロパティ変更など）
+
+            // プロパティを更新すると、PropertyChangedが発生する
+            ((MainWindowViewModel)DataContext).Input = "Click!";
+            //var dt = DataContext as MainWindowViewModel;
+            //dt.Input = "Click!";
+
         }
     }
 }

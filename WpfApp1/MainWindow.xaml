@@ -3,10 +3,41 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="400">
+    <!--xmlns:vm="clr-namespace:WpfApp1.ViewModel"-->
+    <!--
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+    -->
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <!--UpdateSourceTriggeで更新タイミングを設定する。LostFocus, PropertyChanged, Explicit -->
+            <TextBox Margin="10" Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Margin="10" Text="{Binding Input}" />
+            <Button Margin="10" Click="Button_Click" Content="InitProperty" />
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1">
+            <Slider Name="slider1" Margin="20" Value="0" />
+            <TextBox Margin="10" Text="{Binding ElementName=slider1, Path=Value, Mode=TwoWay, UpdateSourceTrigger=Default}" />
+            <TextBox Margin="5" Text="{Binding Title, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=TwoWay}" />
+            <TextBox Margin="5" Text="{Binding Orientation, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}" />
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="1" >
+            <Button Margin="10" Content="Click1" Command="{Binding ButtonCommand}"/>
+            <TextBox Margin="10" Text="{Binding ShowText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Margin="10" Content="Click2" Command="{Binding ShowCommand}" />
+        </StackPanel>
     </Grid>
 </Window>
