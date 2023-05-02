@@ -10,11 +10,13 @@ namespace WpfApp1.ViewModel
 {
     internal class ViewModelBase : INotifyPropertyChanged
     {
-        // プロパティの値に変更があったことを通知するイベント
+        // イベントハンドラのデリゲート、プロパティ値が変更されたことをクライアントに通知します
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// propertyNameには変更が行われたプロパティの名前が入る
+        /// CallerMemberNameを使うことで、いちいちプロパティ名を指定しなくて済む
+        /// 
         /// CallerMemberName 呼び出し元の名前
         /// CallerFilePath 呼び出し元ファイル名
         /// CallerLineNumber 呼び出し元行数

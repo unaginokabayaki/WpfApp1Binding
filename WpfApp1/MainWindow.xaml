@@ -48,9 +48,9 @@
             <GroupBox Header="Calc" Padding="5" Margin="10">
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Name="Radio1" GroupName="Grp1" Content="Plus" Margin="0,0,10,0" 
-                                 IsChecked="{Binding PlusChecked , Mode=TwoWay}" Command="{Binding PlusCommand}"/>
+                                 Command="{Binding CalcCommand}" CommandParameter="+"/>
                     <RadioButton Name="Radio2" GroupName="Grp1" Content="Minus" Margin="0,0,10,0" 
-                                 IsChecked="{Binding MinusChecked, Mode=TwoWay}" Command="{Binding MinusCommand}"/>
+                                 Command="{Binding CalcCommand}" CommandParameter="-"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

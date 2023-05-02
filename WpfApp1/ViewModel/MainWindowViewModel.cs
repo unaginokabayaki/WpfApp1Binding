@@ -10,22 +10,8 @@ using WpfApp1.Command;
 
 namespace WpfApp1.ViewModel
 {
-    internal class MainWindowViewModel : INotifyPropertyChanged
-    //internal class MainWindowViewModel : ViewModelBase
+    internal class MainWindowViewModel : ViewModelBase
     {
-        // イベントハンドラのデリゲート、プロパティ値が変更されたことをクライアントに通知します
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // CallerMemberNameを使うことで、いちいちプロパティ名を指定しなくて済む
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            // PropertyChangedを実行する、スレッドセーフなのでInvoke推奨か
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            //PropertyChanged?.BeginInvoke(this, new PropertyChangedEventArgs(propertyName), new AsyncCallback((ar) => { }) , null);
-            //if (PropertyChanged != null) 
-            //    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public void OnPropertyChanged3()
         {
             OnPropertyChanged("FirstValue");
@@ -83,22 +69,11 @@ namespace WpfApp1.ViewModel
             });
 
 
-            //CalcCommand = new DelegateCommand(() =>
-            //{
-            //    PaformCalc();
-            //});
-
-            PlusCommand = new DelegateCommand(() =>
+            CalcCommand = new DelegateCommand<string>((operation) =>
             {
-                PaformCalc("+");
+                PaformCalc(operation);
             });
 
-            MinusCommand = new DelegateCommand(() =>
-            {
-                PaformCalc("-");
-            });
-
-            PlusChecked = true;
         }
 
         private bool canExecuteCommand()
@@ -108,14 +83,19 @@ namespace WpfApp1.ViewModel
 
         private void PaformCalc(string operation)
         {
-            if (operation == "+")
+            if (operation != null)
             {
-                Operation = "+";
+                _operationCurrent = operation;
+            }
+
+            if (_operationCurrent == "+")
+            {
+                Operation = "足す";
                 AnswerValue = FirstValue + SecondValue;
             }
-            else if (operation == "-")
+            else if (_operationCurrent == "-")
             {
-                Operation = "-";
+                Operation = "引く";
                 AnswerValue = FirstValue - SecondValue;
             }
         }
@@ -168,8 +148,7 @@ namespace WpfApp1.ViewModel
             set 
             { 
                 _firstValue = value;
-                PaformCalc(Operation);
-                OnPropertyChanged3();
+                PaformCalc(null);
             }
         }
 
@@ -180,8 +159,7 @@ namespace WpfApp1.ViewModel
             set 
             { 
                 _secondValue = value;
-                PaformCalc(Operation);
-                OnPropertyChanged3();
+                PaformCalc(null);
             }
         }
 
@@ -196,6 +174,8 @@ namespace WpfApp1.ViewModel
             }
         }
 
+        private string _operationCurrent;
+
         private string _operation;
         public string Operation
         {
@@ -206,28 +186,7 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        private bool _plusChecked;
-        public bool PlusChecked
-        {
-            get { return _plusChecked; } 
-            set { 
-                _plusChecked = value;
-                Operation = "+";
-            }
-        }
-
-        private bool _minusChecked;
-        public bool MinusChecked
-        {
-            get { return _minusChecked; }
-            set { 
-                _minusChecked = value;
-                Operation = "-";
-            }
-        }
-
-        public DelegateCommand CalcCommand { get; }
-        public DelegateCommand PlusCommand { get; }
-        public DelegateCommand MinusCommand {  get; }
+        public DelegateCommand<string> CalcCommand { get; }
+ 
     }
 }
