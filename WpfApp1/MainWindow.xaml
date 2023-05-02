@@ -39,5 +39,20 @@
             <TextBox Margin="10" Text="{Binding ShowText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button Margin="10" Content="Click2" Command="{Binding ShowCommand}" />
         </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+            <TextBox Margin="10" Name="Text1" Text="{Binding FirstValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock TextAlignment="Center" Text="{Binding Operation}" />
+            <TextBox Margin="10" Name="Text2" Text="{Binding SecondValue,UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock TextAlignment="Center" Text="＝" />
+            <TextBox Margin="10" Name="TextAnswer" Text="{Binding AnswerValue}" />
+            <GroupBox Header="Calc" Padding="5" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Name="Radio1" GroupName="Grp1" Content="Plus" Margin="0,0,10,0" 
+                                 IsChecked="{Binding PlusChecked , Mode=TwoWay}" Command="{Binding PlusCommand}"/>
+                    <RadioButton Name="Radio2" GroupName="Grp1" Content="Minus" Margin="0,0,10,0" 
+                                 IsChecked="{Binding MinusChecked, Mode=TwoWay}" Command="{Binding MinusCommand}"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
     </Grid>
 </Window>

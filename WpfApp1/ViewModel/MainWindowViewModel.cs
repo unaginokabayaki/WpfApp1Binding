@@ -26,6 +26,13 @@ namespace WpfApp1.ViewModel
             //    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public void OnPropertyChanged3()
+        {
+            OnPropertyChanged("FirstValue");
+            OnPropertyChanged("SecondValue");
+            OnPropertyChanged("AnswerValue");
+        }
+
         private string _input;
         /// <summary>
         /// xamlのTextBoxにバインド
@@ -74,11 +81,43 @@ namespace WpfApp1.ViewModel
                 // テキストに入力があれば有効化
                 return ShowText.Length > 0;
             });
+
+
+            //CalcCommand = new DelegateCommand(() =>
+            //{
+            //    PaformCalc();
+            //});
+
+            PlusCommand = new DelegateCommand(() =>
+            {
+                PaformCalc("+");
+            });
+
+            MinusCommand = new DelegateCommand(() =>
+            {
+                PaformCalc("-");
+            });
+
+            PlusChecked = true;
         }
 
         private bool canExecuteCommand()
         {
             return Flag;
+        }
+
+        private void PaformCalc(string operation)
+        {
+            if (operation == "+")
+            {
+                Operation = "+";
+                AnswerValue = FirstValue + SecondValue;
+            }
+            else if (operation == "-")
+            {
+                Operation = "-";
+                AnswerValue = FirstValue - SecondValue;
+            }
         }
 
         /// <summary>
@@ -102,10 +141,8 @@ namespace WpfApp1.ViewModel
             }
         }
 
-
-
         /// <summary>
-        /// 
+        /// xamlのテキストにバインド
         /// </summary>
         public DelegateCommand ShowCommand { get; }
 
@@ -119,10 +156,78 @@ namespace WpfApp1.ViewModel
             set
             {
                 _showText = value;
-                ShowCommand.Execute(this);
-                //ShowCommand.DelegateCanExecute();
+                ShowCommand.DelegateCanExecute();
             }
         }
-       
+
+
+        private double _firstValue;
+        public double FirstValue
+        {
+            get { return _firstValue; } 
+            set 
+            { 
+                _firstValue = value;
+                PaformCalc(Operation);
+                OnPropertyChanged3();
+            }
+        }
+
+        private double _secondValue;
+        public double SecondValue
+        {
+            get { return _secondValue; }
+            set 
+            { 
+                _secondValue = value;
+                PaformCalc(Operation);
+                OnPropertyChanged3();
+            }
+        }
+
+        private double _answerValue;
+        public double AnswerValue
+        {
+            get { return _answerValue; }
+            set
+            {
+                _answerValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _operation;
+        public string Operation
+        {
+            get { return _operation; }
+            set { 
+                _operation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _plusChecked;
+        public bool PlusChecked
+        {
+            get { return _plusChecked; } 
+            set { 
+                _plusChecked = value;
+                Operation = "+";
+            }
+        }
+
+        private bool _minusChecked;
+        public bool MinusChecked
+        {
+            get { return _minusChecked; }
+            set { 
+                _minusChecked = value;
+                Operation = "-";
+            }
+        }
+
+        public DelegateCommand CalcCommand { get; }
+        public DelegateCommand PlusCommand { get; }
+        public DelegateCommand MinusCommand {  get; }
     }
 }
