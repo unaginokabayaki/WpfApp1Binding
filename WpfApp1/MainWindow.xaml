@@ -31,21 +31,24 @@
         <StackPanel Orientation="Vertical" Grid.Column="1">
             <Slider Name="slider1" Margin="20" Value="0" />
             <TextBox Margin="10" Text="{Binding ElementName=slider1, Path=Value, Mode=TwoWay, UpdateSourceTrigger=Default}" />
+            <TextBlock Margin="5" Text="親のプロパティを表示" />
             <TextBox Margin="5" Text="{Binding Title, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=TwoWay}" />
             <TextBox Margin="5" Text="{Binding Orientation, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}" />
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Row="1" >
-            <Button Margin="10" Content="Click1" Command="{Binding ButtonCommand}"/>
-            <TextBox Margin="10" Text="{Binding ShowText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Margin="10" Content="Click2" Command="{Binding ShowCommand}" />
+            <Button Margin="10" Content="Click Wait 3sec" Command="{Binding ButtonCommand}"/>
+            <TextBlock Margin="10,10,10,0" Text="Please Input" />
+            <TextBox Margin="10,0,10,0" Text="{Binding ShowText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Margin="10" Content="Can Click After Input" Command="{Binding ShowCommand}" />
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
-            <TextBox Margin="10" Name="Text1" Text="{Binding FirstValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Margin="10,0,10,0" Text="Calc" />
+            <TextBox Margin="10,0,10,0" Name="Text1" Text="{Binding FirstValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock TextAlignment="Center" Text="{Binding Operation}" />
-            <TextBox Margin="10" Name="Text2" Text="{Binding SecondValue,UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Margin="10,0,10,0" Name="Text2" Text="{Binding SecondValue,UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock TextAlignment="Center" Text="＝" />
-            <TextBox Margin="10" Name="TextAnswer" Text="{Binding AnswerValue}" />
-            <GroupBox Header="Calc" Padding="5" Margin="10">
+            <TextBox Margin="10,0,10,0" Name="TextAnswer" Text="{Binding AnswerValue}" />
+            <GroupBox Header="Calc" Padding="5" Margin="10,0,10,0">
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Name="Radio1" GroupName="Grp1" Content="Plus" Margin="0,0,10,0" 
                                  Command="{Binding CalcCommand}" CommandParameter="+"/>
